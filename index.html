@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Webpage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px gray;
+            border-radius: 5px;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        input {
+            display: block;
+            margin: 10px auto;
+            padding: 8px;
+            width: 80%;
+        }
+        button {
+            padding: 8px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Interactive Webpage</h2>
+
+    <!-- Form -->
+    <form id="myForm">
+        <input type="text" id="name" placeholder="Enter Name">
+        <input type="email" id="email" placeholder="Enter Email">
+        <div style="position: relative; display: inline-block;">
+            <input type="password" id="password" placeholder="Enter Password">
+            <button type="button" id="togglePassword">👁</button>
+        </div>
+        <p class="error" id="errorMsg"></p>
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Button to open modal -->
+    <button id="openModal">Open Modal</button>
+
+    <!-- Modal -->
+    <div class="overlay" id="overlay"></div>
+    <div class="modal" id="modal">
+        <p>This is a modal window</p>
+        <button id="closeModal">Close</button>
+    </div>
+
+    <!-- Dynamic text change -->
+    <p id="dynamicText">Click the button to change this text</p>
+    <button id="changeText">Change Text</button>
+
+    <script>
+        // Form validation
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let errorMsg = document.getElementById("errorMsg");
+
+            if (name === "" || email === "" || password === "") {
+                event.preventDefault();
+                errorMsg.textContent = "All fields are required!";
+            } else if (!email.includes("@")) {
+                event.preventDefault();
+                errorMsg.textContent = "Enter a valid email!";
+            } else {
+                errorMsg.textContent = "";
+                alert("Form submitted successfully!");
+            }
+        });
+
+        // Toggle password visibility
+        document.getElementById("togglePassword").addEventListener("click", function() {
+            let passwordField = document.getElementById("password");
+            passwordField.type = (passwordField.type === "password") ? "text" : "password";
+        });
+
+        // Open Modal
+        document.getElementById("openModal").addEventListener("click", function() {
+            document.getElementById("modal").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
+        });
+
+        // Close Modal
+        document.getElementById("closeModal").addEventListener("click", function() {
+            document.getElementById("modal").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        });
+
+        // Change Text
+        document.getElementById("changeText").addEventListener("click", function() {
+            document.getElementById("dynamicText").textContent = "The text has been changed!";
+        });
+    </script>
+
+</body>
+</html>
